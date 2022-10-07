@@ -38,6 +38,5 @@ Finally in order to make use of the data and compare the predictions to the actu
 I used Pandas to create a dataframe to convert to a .csv file and MySQL Connector to perform database operations.
 
 ## Future
-
-
-
+Possible future features:
+- Automated updates based on specific intervals 
