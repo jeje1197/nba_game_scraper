@@ -1,6 +1,6 @@
 # NBA Web Scraper
 
-This program fetches data about basketball games from the official NBA website and parses it into a CSV file.
+This program makes predictions on which NBA teams will win their games in the next 30 days.
 
 Tools Used: Python, BeautifulSoup, Pandas
 
@@ -22,9 +22,9 @@ its appropriate categories. The data I pulled from each game listing could be gr
 - game status (start time / game clock),
 - game score
 
-## Storing
-Finally, once all the data for each game was properly formatted. I stored it in a .csv file using Pandas.
+In this stage, I took it a step further and added predictions to guess who would win the matchup for each game.
 
-This left the option for automating the process to occur daily at specific intervals and storing it in a database of choice.
+## Storing
+Finally, once all the data for each game was properly formatted. I stored it in a .csv file using Pandas. This left the option for automating the prediction process to occur daily at specific intervals and storing the data in a database.
 
 
