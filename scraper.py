@@ -1,6 +1,8 @@
 from requests_html import HTMLSession
 from bs4 import BeautifulSoup
-from classes import Game
+
+from datetime import datetime
+import pandas as pd
 
 s = HTMLSession()
 
@@ -27,12 +29,21 @@ def transform(soup: BeautifulSoup):
         if game_status == 'Final': 
             game_scores = [item.text for item in item.findAll('p', {'class': 'MatchupCardScore_p__dfNvc GameCardMatchup_matchupScoreCard__owb6w'})]
 
-        games.append(Game(game_type, team_names, is_live, game_status, game_scores))
+        game = {
+            'Type': game_type,
+            'Teams': team_names,
+            'Live': is_live,
+            'Status': game_status,
+            'Score': f'{game_scores[0]}-{game_scores[1]}' if game_scores else None
+        }
+        games.append(game)
     return games
 
-soup = extract() # Extract content from webpage
-games = transform(soup)
+soup = extract()         # Extract content from webpage
+games = transform(soup)  # Create list of dictionaries from data
 
-for game in games:
-    print(game.type, game.teams, game.is_live, game.status, game.score)
-# print(transform(soup)) # Get game divs
+df = pd.DataFrame(games) # Create dataframe
+print(df.head())
+
+current_time = datetime.now().strftime("%d-%m-%Y_%H-%M")
+df.to_csv(f'nbagames_{current_time}.csv') # Create csv file
