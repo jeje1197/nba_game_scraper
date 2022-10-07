@@ -1,6 +1,10 @@
 # NBA Web Scraper
 
 This program fetches data about basketball games from the official NBA website and parses it into a CSV file.
+
+Tools Used: Python, BeautifulSoup, Pandas
+
+## How I created it
 The core of this program can be broken into three parts:
 1) Extraction
 2) Transformation
@@ -18,4 +22,7 @@ its appropriate categories. The data I pulled from each game listing could be gr
 - game status (start time / game clock),
 - game score
 
-Tools Used: Python, BeautifulSoup, Pandas
+## Storing
+Finally, once all the data for each game was properly formatted. I stored it in a .csv file using Pandas.
+
+
