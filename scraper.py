@@ -7,12 +7,19 @@ import pandas as pd
 
 s = HTMLSession()
 
+# Arguments: 
+# - date (string formatted: "YYYY-MM-DD")
+# Return: BeautifulSoup object
 def extract(date:str = ''):
     url = f'https://www.nba.com/games?date={date}' if date else 'https://www.nba.com/games'
     r = s.get(url)
     soup = BeautifulSoup(r.content, 'html.parser')
     return soup
 
+# Arguments:
+# - BeautifulSoup object
+# - date
+# Return: list[dict]
 def transform(soup: BeautifulSoup, date:str):
     game_divs = soup.find_all('div', {'class': 'GameCard_gc__UCI46 GameCardsMapper_gamecard__pz1rg'})
     games = []
@@ -46,9 +53,10 @@ def transform(soup: BeautifulSoup, date:str):
         games.append(game)
     return games
 
-
-# Team names eg.["Kings", "Spurs"]
-# Team records eg. [["10", "3"], ["5", "8"]]
+# Arguments:
+#   - Team names (list[strings]: ["Kings", "Spurs"])
+#   - Team records (list[list[string]]: [["10", "3"], ["5", "8"]])
+# Return: string
 def predict_winner(team_names:list[str], team_records:list[list[str]]):
     win_lose_ratios = []
     for list in team_records:
@@ -66,7 +74,9 @@ def predict_winner(team_names:list[str], team_records:list[list[str]]):
     else:
         return team_names[random.randint(0, 1)]
 
-
+# Arguments:
+#   - num_days (int: 30)
+# Return: list[dict]
 def make_predictions(num_days:int):
     all_games = []
     base_date = datetime.today()
@@ -77,7 +87,10 @@ def make_predictions(num_days:int):
         all_games.extend(games_for_day)
     return all_games
 
-def create_csv(games:list):
+# Arguments:
+#   - games (list[dict])
+# Return: None
+def create_csv(games:list[dict]):
     df = pd.DataFrame(games) # Create dataframe
     print(df.head())
 
@@ -86,4 +99,3 @@ def create_csv(games:list):
 
 games = make_predictions(30) # Make predictions for 30 days in advance
 create_csv(games) # Store data in a csv file
-
