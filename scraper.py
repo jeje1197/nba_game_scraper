@@ -5,6 +5,8 @@ from bs4 import BeautifulSoup
 from datetime import datetime, timedelta
 import pandas as pd
 
+from mydb import createDb, createTable, insertData, readData
+
 s = HTMLSession()
 
 # Arguments: 
@@ -92,10 +94,23 @@ def make_predictions(num_days:int):
 # Return: None
 def create_csv(games:list[dict]):
     df = pd.DataFrame(games) # Create dataframe
-    print(df.head())
+    # print(df.head())
 
-    current_time = datetime.now().strftime("%d-%m-%Y_%H-%M")
+    current_time = datetime.now().strftime("%d-%m-%Y_time_%H_%M")
     df.to_csv(f'nbagames_{current_time}.csv') # Create csv file
 
 games = make_predictions(30) # Make predictions for 30 days in advance
 create_csv(games) # Store data in a csv file
+
+# Store predictions in database
+try:
+    createDb()
+except:
+    pass
+
+try:
+    createTable()
+except:
+    pass
+insertData(games)
+readData()
