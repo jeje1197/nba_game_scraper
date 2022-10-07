@@ -25,4 +25,6 @@ its appropriate categories. The data I pulled from each game listing could be gr
 ## Storing
 Finally, once all the data for each game was properly formatted. I stored it in a .csv file using Pandas.
 
+This left the option for automation the process to daily at specific intervals and storing it in a database of choice.
+
 
